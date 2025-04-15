@@ -10,16 +10,23 @@ type TaskProps = {
 type TodoListProps = {
     title: string
     tasks: TaskProps[]
+    removeTask: (id: number) => void
+    filterTasks: (filter: string) => void
+    
     
 }
 
-export const Todolist = ({title, tasks}: TodoListProps) => {
+export const Todolist = ({title, tasks, removeTask, filterTasks}: TodoListProps) => {
 
   const mapedTasks = tasks.map((task) => {
               
     return (
-      <Task key={task.id} id={task.id} title={task.title} isDone={task.isDone}/>
-    )
+      <div>
+        
+        <Task key={task.id} id={task.id} title={task.title} isDone={task.isDone} removeTask={removeTask}/>
+        
+      </div>
+          )
 
     
   })
@@ -29,15 +36,19 @@ export const Todolist = ({title, tasks}: TodoListProps) => {
           <h3>{title}</h3>
           <div>
             <input/>
-            <button>+</button>
-          </div>
-          <ul>
+            <Button title="+"/>
+          </div> {
+            tasks.length === 0 ?
+            <p>Тасок нет</p> :
+            <ul>
             {mapedTasks}
-          </ul>
+            </ul>
+          }
+          
           <div>
-            <Button title={'All'}/>
-            <Button title={'Active'}/>
-            <Button title={'Completed'}/>
+            <Button title={'All'} callBack={() => filterTasks('All')}/>
+            <Button title={'Active'} callBack={() => filterTasks('Active')}/>
+            <Button title={'Completed'} callBack={() => filterTasks('Comleted')}/>
             
           </div>
         </div>
