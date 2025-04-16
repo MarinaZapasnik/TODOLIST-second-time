@@ -1,3 +1,5 @@
+import { useState } from "react"
+import { FilterProps } from "../App"
 import { Button } from "./Button"
 import { Task } from "./Task"
 
@@ -11,14 +13,37 @@ type TodoListProps = {
     title: string
     tasks: TaskProps[]
     removeTask: (id: number) => void
-    filterTasks: (filter: string) => void
+    // filterTasks: (filter: FilterProps) => void
     
     
 }
 
-export const Todolist = ({title, tasks, removeTask, filterTasks}: TodoListProps) => {
+export const Todolist = ({title, tasks, removeTask}: TodoListProps) => {
 
-  const mapedTasks = tasks.map((task) => {
+
+  const [filterVal, setFilter] = useState('All') 
+
+  
+
+  const filterTasks = (filter: FilterProps) => {
+    setFilter(filter)
+  }
+
+  const durshlagFunction = () => {
+    let durshlag = tasks 
+  
+    if (filterVal === 'Active') {
+      durshlag = tasks.filter(task => !task.isDone);
+    } else if (filterVal === 'Completed') {
+      durshlag = tasks.filter(task => task.isDone);
+    }
+
+    return durshlag
+  }
+
+  
+
+  const mapedTasks = durshlagFunction().map((task) => {
               
     return (
       <div>
@@ -30,6 +55,9 @@ export const Todolist = ({title, tasks, removeTask, filterTasks}: TodoListProps)
 
     
   })
+
+
+ 
 
     return (
         <div>
@@ -48,7 +76,7 @@ export const Todolist = ({title, tasks, removeTask, filterTasks}: TodoListProps)
           <div>
             <Button title={'All'} callBack={() => filterTasks('All')}/>
             <Button title={'Active'} callBack={() => filterTasks('Active')}/>
-            <Button title={'Completed'} callBack={() => filterTasks('Comleted')}/>
+            <Button title={'Completed'} callBack={() => filterTasks('Completed')}/>
             
           </div>
         </div>

@@ -2,6 +2,9 @@ import { useState } from 'react'
 import './App.css'
 import { Todolist } from './components/Todolist'
 
+
+export type FilterProps = 'All' | 'Active' | 'Completed'
+
 function App() {
 
 const title1 = 'Title 1'
@@ -28,18 +31,22 @@ const removeTask = (id: number) => {
   
 }
 
-type FilterProps = 'All' | 'Active' | 'Completed'
+// const [filterVal, setFilter] = useState('All') 
+
+// let durshlag = tasks 
+ 
+// if (filterVal === 'Active') {
+//   durshlag = tasks.filter(task => !task.isDone);
+// } else if (filterVal === 'Completed') {
+//   durshlag = tasks.filter(task => task.isDone);
+// }
+
+// const filterTasks = (filter: FilterProps) => {
+//   setFilter(filter)
+// }
 
 
-const filterTasks = (filter: FilterProps) => {
 
-
-  const filteredTasks = filter === 'All'? initialTasks :
-                        filter === 'Active'? (tasks.filter(task => !task.isDone)) : 
-                                              (tasks.filter(task => task.isDone))
-
-  setTasks(filteredTasks)
-}
 
 // const allTasks = () => {
   
@@ -57,7 +64,7 @@ const filterTasks = (filter: FilterProps) => {
 
   return (
       <div className="app">
-        <Todolist title = {title1} tasks = {tasks} removeTask={removeTask} filterTasks={filterTasks}/>
+        <Todolist title = {title1} tasks={tasks} removeTask={removeTask} />
        
       </div>
   )
