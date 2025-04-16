@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import { Todolist } from './components/Todolist'
+import { v1 } from 'uuid'
 
 
 export type FilterProps = 'All' | 'Active' | 'Completed'
@@ -11,12 +12,12 @@ const title1 = 'Title 1'
 
 
 const initialTasks = [
-  {id: 1, title: 'JS', isDone: true},
-  {id: 2, title: 'CSS', isDone: false},
-  {id: 3, title: 'React', isDone: false},
-  {id: 12, title: 'TS', isDone: false},
-  {id: 13, title: 'StyledComponents', isDone: false},
-  {id: 14, title: 'HTML', isDone: false},
+  {id: v1(), title: 'JS', isDone: true},
+  {id: v1(), title: 'CSS', isDone: false},
+  {id: v1(), title: 'React', isDone: false},
+  {id: v1(), title: 'TS', isDone: false},
+  {id: v1(), title: 'StyledComponents', isDone: false},
+  {id: v1(), title: 'HTML', isDone: false},
 ]
 
 
@@ -24,7 +25,7 @@ const [tasks, setTasks] = useState(initialTasks)
 
 
 
-const removeTask = (id: number) => {
+const removeTask = (id: string) => {
   const filteredTasks = tasks.filter(task => task.id !== id)
   setTasks(filteredTasks)
   

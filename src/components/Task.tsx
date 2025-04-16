@@ -2,10 +2,10 @@ import { Button } from "./Button"
 
 
 type TaskProps = {
-    id:number
+    id:string
     title: string
     isDone: boolean
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
 }
 
 

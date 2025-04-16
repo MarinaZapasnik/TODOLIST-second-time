@@ -4,7 +4,7 @@ import { Button } from "./Button"
 import { Task } from "./Task"
 
 type TaskProps = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -12,7 +12,7 @@ type TaskProps = {
 type TodoListProps = {
     title: string
     tasks: TaskProps[]
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
     // filterTasks: (filter: FilterProps) => void
     
     
