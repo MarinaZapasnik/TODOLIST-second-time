@@ -4,6 +4,7 @@ import { Todolist } from './components/Todolist'
 import { v1 } from 'uuid'
 
 
+
 export type FilterProps = 'All' | 'Active' | 'Completed'
 
 function App() {
@@ -20,6 +21,9 @@ const initialTasks = [
   {id: v1(), title: 'HTML', isDone: false},
 ]
 
+console.log(initialTasks);
+
+
 
 const [tasks, setTasks] = useState(initialTasks)
 
@@ -29,6 +33,13 @@ const removeTask = (id: string) => {
   const filteredTasks = tasks.filter(task => task.id !== id)
   setTasks(filteredTasks)
   
+  
+} 
+
+const addTask = (newTitle: string) => { //newTitle-это наш inputRef.current.value из тудулиста 
+  const newTask = {id: v1(), title: newTitle, isDone: true} 
+  //const newArr = [ newTask ,...tasks]
+  setTasks([ newTask ,...tasks])
   
 }
 
@@ -65,7 +76,7 @@ const removeTask = (id: string) => {
 
   return (
       <div className="app">
-        <Todolist title = {title1} tasks={tasks} removeTask={removeTask} />
+        <Todolist title = {title1} tasks={tasks} removeTask={removeTask} addTask={addTask}/>
        
       </div>
   )

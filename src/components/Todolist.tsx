@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { FilterProps } from "../App"
 import { Button } from "./Button"
 import { Task } from "./Task"
@@ -13,12 +13,13 @@ type TodoListProps = {
     title: string
     tasks: TaskProps[]
     removeTask: (id: string) => void
+    addTask: (newTitle: string) => void
     // filterTasks: (filter: FilterProps) => void
     
     
 }
 
-export const Todolist = ({title, tasks, removeTask}: TodoListProps) => {
+export const Todolist = ({title, tasks, removeTask, addTask}: TodoListProps) => {
 
 
   const [filterVal, setFilter] = useState('All') 
@@ -39,7 +40,12 @@ export const Todolist = ({title, tasks, removeTask}: TodoListProps) => {
     }
 
     return durshlag
+   
+    
   }
+
+  
+  
 
   
 
@@ -56,15 +62,53 @@ export const Todolist = ({title, tasks, removeTask}: TodoListProps) => {
     
   })
 
+////  ТУТ ИСПОЛЬЗОВАЛИ ЮЗ РЕФ ДЛЯ ИНПУТА
+  // // const inputRef = useRef<HTMLInputElement>(null)  //локальный стейт
 
- 
+  // // console.log(inputRef);
+  
+
+  // // return (
+  // //     <div>
+  // //       <h3>{title}</h3>
+  // //       <div>
+  // //         <input ref={inputRef}/>
+  // //         <Button title="+" callBack ={() => 
+  // //           { if (inputRef.current) {
+  // //             addTask(inputRef.current.value)
+  // //             inputRef.current.value = ''
+  // //           }
+              
+  // //         }}/> 
+
+
+
+
+    const [newTitle, setNewTitle] = useState('')
+
 
     return (
         <div>
           <h3>{title}</h3>
           <div>
-            <input/>
-            <Button title="+"/>
+            <input value={newTitle} 
+              onChange={(e) => {  //в value прописываем значение newTitle для того чтобы при зачистке в него сеталось значение
+              setNewTitle(e.currentTarget.value);
+              }}
+              onKeyDown={(e) => {
+
+                  if (e.key === 'Enter') {
+                    addTask(newTitle)
+                    setNewTitle('')
+                  }
+                  
+              } }
+              
+              />
+            <Button title="+" callBack ={() => {
+              addTask(newTitle)
+              setNewTitle('')
+            } }/>
           </div> {
             tasks.length === 0 ?
             <p>Тасок нет</p> :

@@ -1,7 +1,7 @@
 import { Button } from "./Button"
 
 
-type TaskProps = {
+export type TaskProps = {
     id:string
     title: string
     isDone: boolean
