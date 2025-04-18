@@ -6,8 +6,12 @@ type ButtonProps = {
 
 export const Button = ({title, callBack}: ButtonProps) => {
 
+    const callBackHandler = () => {
+        callBack
+    }
+
     return (
-       <button onClick = {callBack}>{title}</button> 
+       <button onClick = {callBackHandler}>{title}</button> 
     )
     
 }

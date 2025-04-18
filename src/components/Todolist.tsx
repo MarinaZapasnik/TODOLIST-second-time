@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { ChangeEvent, KeyboardEvent, useRef, useState } from "react"
 import { FilterProps } from "../App"
 import { Button } from "./Button"
 import { Task } from "./Task"
@@ -50,11 +50,15 @@ export const Todolist = ({title, tasks, removeTask, addTask}: TodoListProps) => 
   
 
   const mapedTasks = durshlagFunction().map((task) => {
-              
+         
+    const removeTaskHandler = (id:string) => {
+      removeTask(id)
+    }
+
     return (
       <div>
         
-        <Task key={task.id} id={task.id} title={task.title} isDone={task.isDone} removeTask={removeTask}/>
+        <Task key={task.id} id={task.id} title={task.title} isDone={task.isDone} removeTask={() => removeTaskHandler(task.id)}/>
         
       </div>
           )
@@ -87,28 +91,37 @@ export const Todolist = ({title, tasks, removeTask, addTask}: TodoListProps) => 
     const [newTitle, setNewTitle] = useState('')
 
 
+    const filterAllTasksHandler = () => filterTasks('All')
+    const filterActiveTasksHandler = () => filterTasks('Active')
+    const filterCompletedTasksHandler = () => filterTasks('Completed')
+
+    const addTaskHandler = () => {
+      addTask(newTitle)
+      setNewTitle('')
+    }
+
+    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        addTaskHandler()
+      }
+    }
+
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {  //в value прописываем значение newTitle для того чтобы при зачистке в него сеталось значение
+      setNewTitle(e.currentTarget.value);
+      }
+
+
+
     return (
         <div>
           <h3>{title}</h3>
           <div>
             <input value={newTitle} 
-              onChange={(e) => {  //в value прописываем значение newTitle для того чтобы при зачистке в него сеталось значение
-              setNewTitle(e.currentTarget.value);
-              }}
-              onKeyDown={(e) => {
-
-                  if (e.key === 'Enter') {
-                    addTask(newTitle)
-                    setNewTitle('')
-                  }
-                  
-              } }
+              onChange={onChangeHandler}
+              onKeyDown={onKeyDownHandler}
               
               />
-            <Button title="+" callBack ={() => {
-              addTask(newTitle)
-              setNewTitle('')
-            } }/>
+            <Button title="+" callBack ={addTaskHandler}/>
           </div> {
             tasks.length === 0 ?
             <p>Тасок нет</p> :
@@ -118,9 +131,16 @@ export const Todolist = ({title, tasks, removeTask, addTask}: TodoListProps) => 
           }
           
           <div>
-            <Button title={'All'} callBack={() => filterTasks('All')}/>
+            {/* <Button title={'All'} callBack={() => filterTasks('All')}/>
             <Button title={'Active'} callBack={() => filterTasks('Active')}/>
             <Button title={'Completed'} callBack={() => filterTasks('Completed')}/>
+             */}
+
+             {/* РЕФАКТОРИНГ ПЕРЕНОС ФУНКЦИЙ НАД РЕТЕРНОМ ХЭНДЛЕР*/}
+
+            <Button title={'All'} callBack={filterAllTasksHandler}/>
+            <Button title={'Active'} callBack={filterActiveTasksHandler}/>
+            <Button title={'Completed'} callBack={filterCompletedTasksHandler}/>
             
           </div>
         </div>

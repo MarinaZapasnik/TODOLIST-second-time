@@ -10,6 +10,9 @@ export type TaskProps = {
 
 
 export const Task = ({title, isDone, id, removeTask}:TaskProps) => {
+
+
+
     return (
         <li>
             <Button title={'X'} callBack={() => removeTask(id)} />
